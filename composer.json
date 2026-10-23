@@ -1,0 +1,8 @@
+{
+  "name": "ha-crm/application",
+  "description": "HA CRM multi-tenant CRM for shared hosting",
+  "type": "project",
+  "require": {"php": ">=8.2", "ext-pdo": "*", "ext-pdo_mysql": "*", "ext-mysqli": "*", "ext-json": "*", "ext-mbstring": "*", "ext-openssl": "*", "phpmailer/phpmailer": "^6.9", "setasign/fpdf": "^1.8"},
+  "autoload": {"psr-4": {"HaCrm\\": "app/"}},
+  "config": {"optimize-autoloader": true, "sort-packages": true}
+}

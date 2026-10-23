@@ -1,0 +1,322 @@
+/* ==========================================================================
+   HA CRM — "Midnight Aurora" animated dashboard theme
+   Pure CSS (no extra JS, CSP-safe). Applies ONLY to the Dashboard page:
+   the :has(.stage-list) selector matches only when the dashboard is shown.
+   Delete the import line in main.jsx to remove the whole theme.
+   ========================================================================== */
+
+@property --fx-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+.app-shell:has(.stage-list) {
+  --fx-bg: #070816;
+  --fx-violet: #8b5cf6;
+  --fx-cyan: #22d3ee;
+  --fx-pink: #f472b6;
+  --fx-amber: #fbbf24;
+  --fx-mint: #34d399;
+  --fx-text: #eef0ff;
+  --fx-soft: #a5accb;
+  background: var(--fx-bg);
+  color: var(--fx-text);
+  position: relative;
+  isolation: isolate;
+}
+body:has(.stage-list) { background: #070816; }
+
+/* ---------- Drifting aurora background ---------- */
+.app-shell:has(.stage-list)::before,
+.app-shell:has(.stage-list)::after {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(70px) saturate(140%);
+}
+.app-shell:has(.stage-list)::before {
+  background:
+    radial-gradient(38% 42% at 18% 22%, #7c3aed99 0%, transparent 70%),
+    radial-gradient(34% 38% at 82% 18%, #06b6d488 0%, transparent 70%),
+    radial-gradient(40% 40% at 70% 85%, #ec489977 0%, transparent 70%);
+  animation: fx-drift-a 22s ease-in-out infinite alternate;
+}
+.app-shell:has(.stage-list)::after {
+  background:
+    radial-gradient(30% 34% at 40% 70%, #3b82f666 0%, transparent 70%),
+    radial-gradient(26% 30% at 90% 60%, #fbbf2433 0%, transparent 70%),
+    radial-gradient(30% 34% at 8% 85%, #34d39944 0%, transparent 70%);
+  animation: fx-drift-b 28s ease-in-out infinite alternate;
+}
+@keyframes fx-drift-a {
+  0%   { transform: translate3d(-4%, -3%, 0) rotate(0deg) scale(1); }
+  100% { transform: translate3d(5%, 4%, 0) rotate(14deg) scale(1.18); }
+}
+@keyframes fx-drift-b {
+  0%   { transform: translate3d(5%, 3%, 0) rotate(0deg) scale(1.1); }
+  100% { transform: translate3d(-6%, -4%, 0) rotate(-16deg) scale(1); }
+}
+
+/* ---------- Sidebar & topbar: glass ---------- */
+.app-shell:has(.stage-list) .sidebar {
+  background: linear-gradient(180deg, #0d0f26cc, #120a2acc 55%, #0a1a2ecc);
+  backdrop-filter: blur(18px);
+  border-right: 1px solid #ffffff14;
+}
+.app-shell:has(.stage-list) .sidebar::after {
+  content: '';
+  position: absolute; top: 0; right: -1px; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, transparent, var(--fx-violet), var(--fx-cyan), var(--fx-pink), transparent);
+  background-size: 100% 300%;
+  animation: fx-flow 6s linear infinite;
+  opacity: .8;
+}
+@keyframes fx-flow { to { background-position: 0 -300%; } }
+
+.app-shell:has(.stage-list) .brand-mark {
+  background: linear-gradient(135deg, var(--fx-violet), var(--fx-cyan));
+  box-shadow: 0 0 0 0 #8b5cf666, 0 10px 30px #22d3ee44;
+  animation: fx-pulse-ring 3s ease-out infinite;
+}
+@keyframes fx-pulse-ring {
+  0%   { box-shadow: 0 0 0 0 #8b5cf688, 0 10px 30px #22d3ee44; }
+  70%  { box-shadow: 0 0 0 14px #8b5cf600, 0 10px 30px #22d3ee44; }
+  100% { box-shadow: 0 0 0 0 #8b5cf600, 0 10px 30px #22d3ee44; }
+}
+.app-shell:has(.stage-list) .nav-link { transition: transform .2s, background .2s, color .2s; }
+.app-shell:has(.stage-list) .nav-link:hover { transform: translateX(4px); background: #ffffff12; }
+.app-shell:has(.stage-list) .nav-link.active {
+  background: linear-gradient(90deg, #8b5cf633, #22d3ee1f);
+  box-shadow: inset 3px 0 var(--fx-cyan), 0 0 24px #8b5cf622;
+}
+.app-shell:has(.stage-list) .nav-link.active svg { color: var(--fx-cyan); }
+
+.app-shell:has(.stage-list) .topbar {
+  background: #0b0d22aa;
+  border-bottom: 1px solid #ffffff12;
+}
+.app-shell:has(.stage-list) .searchbox {
+  background: #ffffff0d; border-color: #ffffff1a; color: var(--fx-soft);
+  transition: box-shadow .25s, border-color .25s;
+}
+.app-shell:has(.stage-list) .searchbox:focus-within {
+  border-color: var(--fx-violet); box-shadow: 0 0 0 3px #8b5cf633, 0 0 24px #8b5cf644;
+}
+.app-shell:has(.stage-list) .searchbox input { color: var(--fx-text); }
+.app-shell:has(.stage-list) .searchbox kbd { background: transparent; border-color: #ffffff22; color: var(--fx-soft); }
+
+/* ---------- Heading ---------- */
+.app-shell:has(.stage-list) .page-heading { animation: fx-rise .8s cubic-bezier(.2,.8,.2,1) both; }
+.app-shell:has(.stage-list) .page-heading h1 {
+  font-size: 32px;
+  background: linear-gradient(100deg, #fff 0%, #c4b5fd 25%, #67e8f9 50%, #f9a8d4 75%, #fff 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: fx-shine 7s linear infinite;
+}
+@keyframes fx-shine { to { background-position: -250% 0; } }
+.app-shell:has(.stage-list) .page-heading p { color: var(--fx-soft); font-size: 13px; }
+.app-shell:has(.stage-list) .eyebrow {
+  color: var(--fx-cyan);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.app-shell:has(.stage-list) .eyebrow::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--fx-mint);
+  box-shadow: 0 0 0 0 #34d39988;
+  animation: fx-ping 1.8s ease-out infinite;
+}
+@keyframes fx-ping {
+  0%   { box-shadow: 0 0 0 0 #34d399aa; }
+  100% { box-shadow: 0 0 0 12px #34d39900; }
+}
+
+/* ---------- Glass cards with rotating neon border ---------- */
+.app-shell:has(.stage-list) .panel,
+.app-shell:has(.stage-list) .metric-card {
+  position: relative;
+  background: linear-gradient(160deg, #ffffff12, #ffffff06);
+  border: 1px solid transparent;
+  border-radius: 18px;
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 20px 50px #00000055, inset 0 1px 0 #ffffff1a;
+  color: var(--fx-text);
+  animation: fx-rise .9s cubic-bezier(.2,.8,.2,1) both;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+}
+.app-shell:has(.stage-list) .panel::before,
+.app-shell:has(.stage-list) .metric-card::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+  background: conic-gradient(from var(--fx-angle),
+    #8b5cf600 0deg, #8b5cf6 70deg, #22d3ee 140deg, #f472b6 210deg, #fbbf24 280deg, #8b5cf600 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: .55;
+  animation: fx-spin 7s linear infinite;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+@keyframes fx-spin { to { --fx-angle: 360deg; } }
+.app-shell:has(.stage-list) .metric-card:hover,
+.app-shell:has(.stage-list) .panel:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 70px #00000066, 0 0 50px #8b5cf633, inset 0 1px 0 #ffffff26;
+}
+.app-shell:has(.stage-list) .metric-card:hover::before,
+.app-shell:has(.stage-list) .panel:hover::before { opacity: 1; }
+
+/* staggered entrance */
+.app-shell:has(.stage-list) .metric-card:nth-child(1) { animation-delay: .10s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(2) { animation-delay: .20s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(3) { animation-delay: .30s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(4) { animation-delay: .40s; }
+.app-shell:has(.stage-list) .content-grid .panel:nth-child(1) { animation-delay: .50s; }
+.app-shell:has(.stage-list) .content-grid .panel:nth-child(2) { animation-delay: .62s; }
+@keyframes fx-rise {
+  from { opacity: 0; transform: translateY(34px) scale(.96); filter: blur(8px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* ---------- Metric cards: each gets its own color story ---------- */
+.app-shell:has(.stage-list) .metric-top { color: var(--fx-soft); font-size: 12px; letter-spacing: .3px; }
+.app-shell:has(.stage-list) .metric-card > strong {
+  font-size: 38px; letter-spacing: -1px;
+  color: #fff;
+  text-shadow: 0 0 28px var(--c1, #8b5cf6);
+  animation: fx-number .9s .35s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes fx-number {
+  from { opacity: 0; transform: translateY(14px) scale(.8); filter: blur(10px); letter-spacing: 8px; }
+  to   { opacity: 1; transform: none; filter: blur(0); letter-spacing: -1px; }
+}
+.app-shell:has(.stage-list) .metric-card > small { color: var(--fx-soft); font-size: 11px; }
+.app-shell:has(.stage-list) .metric-icon {
+  color: #fff;
+  background: linear-gradient(135deg, var(--c1, #8b5cf6), var(--c2, #22d3ee));
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--c1, #8b5cf6) 55%, transparent);
+  animation: fx-float 4s ease-in-out infinite;
+}
+@keyframes fx-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-5px) rotate(6deg); }
+}
+.app-shell:has(.stage-list) .metric-card:nth-child(1) { --c1: #8b5cf6; --c2: #6366f1; }
+.app-shell:has(.stage-list) .metric-card:nth-child(2) { --c1: #22d3ee; --c2: #3b82f6; }
+.app-shell:has(.stage-list) .metric-card:nth-child(3) { --c1: #f472b6; --c2: #fb7185; }
+.app-shell:has(.stage-list) .metric-card:nth-child(4) { --c1: #fbbf24; --c2: #f97316; }
+.app-shell:has(.stage-list) .metric-card:nth-child(2) .metric-icon { animation-delay: -1s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(3) .metric-icon { animation-delay: -2s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(4) .metric-icon { animation-delay: -3s; }
+
+/* light sweep across metric cards */
+.app-shell:has(.stage-list) .metric-card::after {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, #ffffff22 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: fx-sweep 6s ease-in-out infinite;
+}
+.app-shell:has(.stage-list) .metric-card:nth-child(2)::after { animation-delay: 1.2s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(3)::after { animation-delay: 2.4s; }
+.app-shell:has(.stage-list) .metric-card:nth-child(4)::after { animation-delay: 3.6s; }
+@keyframes fx-sweep {
+  0%, 60% { transform: translateX(-120%); }
+  100%    { transform: translateX(120%); }
+}
+
+/* ---------- Panels: text colors ---------- */
+.app-shell:has(.stage-list) .panel-head h2 { color: #fff; font-size: 16px; }
+.app-shell:has(.stage-list) .panel-head p,
+.app-shell:has(.stage-list) .panel-head small { color: var(--fx-soft); }
+.app-shell:has(.stage-list) .panel-head svg { color: var(--fx-cyan); }
+.app-shell:has(.stage-list) .subtle-button {
+  background: #ffffff10; color: var(--fx-text); border: 1px solid #ffffff1a;
+}
+.app-shell:has(.stage-list) .subtle-button:hover {
+  background: linear-gradient(90deg, #8b5cf655, #22d3ee44); transform: translateY(-1px);
+}
+
+/* ---------- Animated bars ---------- */
+.app-shell:has(.stage-list) .stage-label span,
+.app-shell:has(.stage-list) .conversion-row > span { color: var(--fx-text); font-size: 12px; }
+.app-shell:has(.stage-list) .stage-label small { color: var(--fx-soft); }
+.app-shell:has(.stage-list) .stage-row > strong,
+.app-shell:has(.stage-list) .conversion-row > strong { color: #fff; }
+.app-shell:has(.stage-list) .bar {
+  height: 10px; background: #ffffff12; border-radius: 99px; overflow: hidden;
+  box-shadow: inset 0 1px 3px #0006;
+}
+.app-shell:has(.stage-list) .bar i {
+  position: relative;
+  background: linear-gradient(90deg, #8b5cf6, #22d3ee, #f472b6, #8b5cf6);
+  background-size: 300% 100%;
+  transform-origin: left center;
+  animation: fx-grow 1.4s .7s cubic-bezier(.2,.9,.2,1) both, fx-bar-flow 5s linear infinite;
+  box-shadow: 0 0 16px #22d3ee88;
+}
+.app-shell:has(.stage-list) .bar i::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, #ffffff88, transparent);
+  transform: translateX(-100%);
+  animation: fx-glint 2.6s 2s ease-in-out infinite;
+}
+@keyframes fx-grow     { from { transform: scaleX(0); opacity: .2; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes fx-bar-flow { to { background-position: -300% 0; } }
+@keyframes fx-glint    { to { transform: translateX(100%); } }
+.app-shell:has(.stage-list) .stage-row:nth-child(2) .bar i,
+.app-shell:has(.stage-list) .conversion-row:nth-of-type(2) .bar i { animation-delay: .85s, 0s; }
+.app-shell:has(.stage-list) .stage-row:nth-child(3) .bar i,
+.app-shell:has(.stage-list) .conversion-row:nth-of-type(3) .bar i { animation-delay: 1s, 0s; }
+.app-shell:has(.stage-list) .stage-row:nth-child(4) .bar i,
+.app-shell:has(.stage-list) .conversion-row:nth-of-type(4) .bar i { animation-delay: 1.15s, 0s; }
+.app-shell:has(.stage-list) .stage-row:nth-child(n+5) .bar i,
+.app-shell:has(.stage-list) .conversion-row:nth-of-type(n+5) .bar i { animation-delay: 1.3s, 0s; }
+
+.app-shell:has(.stage-list) .conversion-chart { border-top-color: #ffffff1a; }
+
+/* ---------- Tasks ---------- */
+.app-shell:has(.stage-list) .task-row {
+  border-top: 1px solid #ffffff12;
+  border-radius: 10px; padding: 12px 8px;
+  transition: background .25s, transform .25s;
+  animation: fx-slide-in .7s cubic-bezier(.2,.8,.2,1) both;
+}
+.app-shell:has(.stage-list) .task-row:nth-of-type(1) { animation-delay: .9s; }
+.app-shell:has(.stage-list) .task-row:nth-of-type(2) { animation-delay: 1.0s; }
+.app-shell:has(.stage-list) .task-row:nth-of-type(3) { animation-delay: 1.1s; }
+.app-shell:has(.stage-list) .task-row:nth-of-type(n+4) { animation-delay: 1.2s; }
+@keyframes fx-slide-in { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+.app-shell:has(.stage-list) .task-row:hover { background: #ffffff0f; transform: translateX(6px); }
+.app-shell:has(.stage-list) .task-row strong { color: #fff; font-size: 12px; }
+.app-shell:has(.stage-list) .task-row small { color: var(--fx-soft); }
+.app-shell:has(.stage-list) .task-dot {
+  background: var(--fx-pink);
+  box-shadow: 0 0 0 0 #f472b699;
+  animation: fx-ping-pink 2s ease-out infinite;
+}
+@keyframes fx-ping-pink {
+  0%   { box-shadow: 0 0 0 0 #f472b6aa; }
+  100% { box-shadow: 0 0 0 11px #f472b600; }
+}
+.app-shell:has(.stage-list) .tag {
+  background: linear-gradient(90deg, #8b5cf633, #22d3ee33);
+  color: #e0e7ff; border: 1px solid #ffffff1a; font-size: 10px;
+}
+.app-shell:has(.stage-list) .empty-state,
+.app-shell:has(.stage-list) .empty-state * { color: var(--fx-soft); }
+
+/* ---------- Loading spinner (if shown) ---------- */
+.app-shell:has(.stage-list) .loading { color: var(--fx-soft); }
+
+/* ---------- Respect users who prefer less motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .app-shell:has(.stage-list),
+  .app-shell:has(.stage-list) *,
+  .app-shell:has(.stage-list)::before,
+  .app-shell:has(.stage-list)::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

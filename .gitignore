@@ -1,0 +1,57 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Laravel
+/storage/*.key
+/storage/app/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Public generated/storage files
+/public/hot
+/public/storage
+
+# Build files
+/public/build
+/dist
+
+# Vite
+.vite/
+
+# IDE
+.vscode/
+.idea/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# PHPUnit
+.phpunit.result.cache
+
+# Coverage
+/coverage
+
+# Local databases
+*.sqlite
+*.sqlite3
+
+# XAMPP/local server files
+xampp/
+apache/
+mysql/
